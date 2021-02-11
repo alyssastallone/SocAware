@@ -2721,6 +2721,12 @@ textarea.form-control-lg {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
+.input-group>.input-group-append {
+  flex: 0 0 100%;
+}
+.input-group .input-group-text {
+  width: 100%;
+}
 
 .valid-feedback {
   display: none;
