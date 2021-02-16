@@ -1,3 +1,7 @@
+
+Template for new pages that need to be added to the website
+includes backgroud settings, navbar at the top, and user picture
+
 <!doctype html>
 <html lang="en">
   <head>
