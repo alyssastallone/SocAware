@@ -1,15 +1,15 @@
 <?php
 
-$serverName = "";
+$servername = "localhost";
 $username = ";
 $password = "";
-$dbname = ""; //name of database on XAMPP 
+$dbname = ""; //name of database on 
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli_connect($servername, $username, $password, $dbname);
 // Check connection
 if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
+  die("Connection failed: " . mnysqli_connect_error());
 }
 
 $sql = "SELECT FName, LName FROM LoginDB";
