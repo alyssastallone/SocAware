@@ -1,11 +1,11 @@
 <?php
 $servername = "localhost";
-$username = "?????";
-$password = "";
+$username = "admin";
+$password = "Capstone21";
 
 // Create connection
-$conn = new mysqli($_SERVER['socaware.c5kalmbrxlsb.us-east-2.rds.amazonaws.com'], $_SERVER['RDS_USERNAME'],
-$_SERVER['RDS_PASSWORD'], $_SERVER['socaware'], $_SERVER['3306']);
+$conn = new mysqli($_SERVER['socaware.c5kalmbrxlsb.us-east-2.rds.amazonaws.com'], $_SERVER['admin'],
+$_SERVER['Capstone21'], $_SERVER['socaware'], $_SERVER['3306']);
 
 // Check connection
 if (!$conn) {
