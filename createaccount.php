@@ -65,7 +65,7 @@ if (isset($_GET["error"])) {
    <label for = "have-account" class="sr-only">Already Have an Account?</label>
    <div class = "mt-3 mb-5">
       <!--Use the <a /a> for adding link to log in button and redirect to log in page--> 
-  <a href=index.html class = "btn btn-secondary btn-block" role = "button" >Log In</a>
+  <a href=index.php class = "btn btn-secondary btn-block" role = "button" >Log In</a>
    </div>
  </div>
  </form>
