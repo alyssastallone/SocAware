@@ -26,8 +26,10 @@ if (isset($_POST["submit"])) {
 
     createUser($conn, $firstname, $lastname, $email, $username, $password, $birthday, $gender);
 
+
 }
 else {
-    header("location: ../createaccount.php");
-    exit();
+//   header("location: ../index.php");
+//    exit();
+echo "<p>Unknown Error occurred</p>";
 }

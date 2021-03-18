@@ -3,12 +3,12 @@ include_once 'header.php'
 ?>
 
     <div class="text-center">
-    <form style = "max-width: 460px; margin:auto;">
+    <form style = "max-width: 460px; margin:auto;" action="includes/signup.inc.php" method="post">
         <img class="mt-4 mb-4" src="images/logo.png" width = "150" height = "150" alt="Logo">
         <h1 style=" font-family : Verdana, Geneva "; = "h3 mt-2 mb-1 font-weight-normal">Create Account</h1>
 
-     <!-- Form that asks for first name, last name, email, username, password, birthday, gender-->  
-     <form action="includes/signup.inc.php" method="post">
+     <!-- Form that asks for first name, last name, email, username, password, birthday, gender 
+     <form action="/includes/functions.inc.php" method="post"> -->
 
       <label for = "first name" class = "mb-2">First Name</label>
       <input type = "text" name="firstname" class="form-control" placeholder="First Name" required autofocus>
@@ -24,8 +24,8 @@ include_once 'header.php'
 
       <label for = "password" class = "mb-2 mt-2">Password</label>
       <input type = "password" name = "password" placeholder="Password" class="form-control" required autofocus>
-
             <!--for birthday form input (includes a calendar icon )-->
+
       <label for="birthday" class = "mb-2 mt-2">Birthday</label>
        <div class="input-group">
            <input class="form-control" id="date" name="birthday" placeholder="MM/DD/YYYY" type="text" required autofocus>
@@ -42,8 +42,10 @@ include_once 'header.php'
         <option>Prefer Not to Answer</option>
       </select>
     </div>
+  
 
     <?php
+
 if (isset($_GET["error"])) {
   if($_GET["error"] == "emptyInput") {
     echo "<p>Please fill in all required fields</p>";
@@ -54,12 +56,15 @@ if (isset($_GET["error"])) {
   else if ($_GET["error"] == "none") {
     echo "<p>Successfully signed up</p>";
   }
+  else {
+    echo "<p>Unknown Error</p>";
+  }
 
 }
 ?>
 
      <div class = "mt-4 mb-3">
-      <!-- Will need to ADD LINK for this -->     
+      <!-- Will need to ADD LINK for this -->  
      <button type="submit" name="submit" class="btn btn-lg btn-secondary btn-block" >Create Account</button>
      <div class ="mt-4">
    <label for = "have-account" class="sr-only">Already Have an Account?</label>
@@ -68,9 +73,7 @@ if (isset($_GET["error"])) {
   <a href=index.php class = "btn btn-secondary btn-block" role = "button" >Log In</a>
    </div>
  </div>
- </form>
  </div>
-      
     </form>
     </div>
 
@@ -96,23 +99,6 @@ if (isset($_GET["error"])) {
     })
 </script>
 
-<!-- Need to add some error handling below-->
-
 <?php
-if (isset($_GET["error"])) {
-  if($_GET["error"] == "emptyInput") {
-    echo "<p>Please fill in all required fields</p>";
-  }
-  else if ($_GET["error"] == "infoExists") {
-    echo "<p>The username or email you entered is already in use.</p>";
-  }
-  else if($_GET["error"] == "none") {
-    echo "<p>Successfully signed up</p>";
-  }
-
-}
-?>
-
-<?php
-include_once 'header.php'
+include_once 'footer.php'
 ?>
