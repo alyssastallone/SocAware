@@ -1,9 +1,95 @@
 <?php
-include_once 'header.php'
+include_once 'header.php';
+
+
+// Include config file
+require_once "includes/dbh.inc.php";
+ 
+// Define variables and initialize with empty values
+$username = $password = $confirm_password = "";
+$fname = $lname = $email = $birthday = $gender = "";
+$username_err = $password_err = $confirm_password_err = "";
+ 
+// Processing form data when form is submitted
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+ 
+    // Validate username
+    if(empty(trim($_POST["username"]))){
+        $username_err = "Please enter a username.";
+    } else{
+        // Prepare a select statement
+        $sql = "SELECT username FROM users WHERE username = ?";
+        
+        if($stmt = mysqli_prepare($conn, $sql)){
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "s", $param_username);
+            
+            // Set parameters
+            $param_username = trim($_POST["username"]);
+            
+            // Attempt to execute the prepared statement
+            if(mysqli_stmt_execute($stmt)){
+                /* store result */
+                mysqli_stmt_store_result($stmt);
+                
+                if(mysqli_stmt_num_rows($stmt) == 1){
+                    $username_err = "This username is already taken.";
+                } else{
+                    $username = trim($_POST["username"]);
+                }
+            } else{
+                echo "Oops! Something went wrong. Please try again later.";
+            }
+
+            // Close statement
+            mysqli_stmt_close($stmt);
+        }
+    }
+    
+    // Validate password
+    if(empty(trim($_POST["password"]))){
+        $password_err = "Please enter a password.";     
+    } elseif(strlen(trim($_POST["password"])) < 6){
+        $password_err = "Password must have at least 6 characters.";
+    } else{
+        $password = trim($_POST["password"]);
+    }
+    
+    // Check input errors before inserting in database
+    if(empty($username_err) && empty($password_err)){
+        
+        // Prepare an insert statement
+        $sql = "INSERT INTO users(fname, lname, email, username, password, birthday, gender) VALUES (?, ?, ?, ?, ?, ?, ?)";
+         
+        if($stmt = mysqli_prepare($conn, $sql)){
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "sssssss", $fname, $lname, $email, $param_username, $param_password, $birthday, $gender);
+            
+            // Set parameters
+            $param_username = $username;
+            $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
+            
+            // Attempt to execute the prepared statement
+            if(mysqli_stmt_execute($stmt)){
+                // Redirect to login page
+                header("location: index.php");
+            } else{
+                echo "Something went wrong. Please try again later.";
+            }
+
+            // Close statement
+            mysqli_stmt_close($stmt);
+        }
+    }
+    
+    // Close connection,
+    mysqli_close($conn);
+}
+
 ?>
 
     <div class="text-center">
-    <form style = "max-width: 460px; margin:auto;" action="includes/signup.inc.php" method="post">
+    <form style = "max-width: 460px; margin:auto;" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         <img class="mt-4 mb-4" src="images/logo.png" width = "150" height = "150" alt="Logo">
         <h1 style=" font-family : Verdana, Geneva "; = "h3 mt-2 mb-1 font-weight-normal">Create Account</h1>
 
@@ -42,29 +128,8 @@ include_once 'header.php'
         <option>Prefer Not to Answer</option>
       </select>
     </div>
-  
-
-    <?php
-
-if (isset($_GET["error"])) {
-  if($_GET["error"] == "emptyInput") {
-    echo "<p>Please fill in all required fields</p>";
-  }
-  else if ($_GET["error"] == "infoExists") {
-    echo "<p>The username or email you entered is already in use.</p>";
-  }
-  else if ($_GET["error"] == "none") {
-    echo "<p>Successfully signed up</p>";
-  }
-  else {
-    echo "<p>Unknown Error</p>";
-  }
-
-}
-?>
 
      <div class = "mt-4 mb-3">
-      <!-- Will need to ADD LINK for this -->  
      <button type="submit" name="submit" class="btn btn-lg btn-secondary btn-block" >Create Account</button>
      <div class ="mt-4">
    <label for = "have-account" class="sr-only">Already Have an Account?</label>
@@ -102,3 +167,6 @@ if (isset($_GET["error"])) {
 <?php
 include_once 'footer.php'
 ?>
+
+<!-- help with php code from 
+https://www.tutorialrepublic.com/php-tutorial/php-mysql-login-system.php-->

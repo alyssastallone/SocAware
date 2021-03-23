@@ -1,10 +1,37 @@
 <?php
-// Include config file
-require_once "dbh.inc.php";
- 
+
+if (isset($_POST["submit"])) {
+
+$username = $_POST["username"];
+$password = $_POST["password"];
+
+require_once 'dbh.inc.php';
+require_once 'functions.inc.php';
+
+//if(emptyInputLogin($username, $password) !== false){
+//    header("location: ../index.php?error=emptyinput");
+//    echo "inEmptyInputLogin";
+//    exit();
+//}
+
+if (loginUser($conn, $username, $password))
+{
+    header("location: ../timeline.php");
+    echo "log in successful";
+}
+
+}
+
+else {
+    header("location: ../index.php");
+    echo ("Login Unsuccessful");
+
+    exit();
+}
+
+
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = "";
-$fname = $lname = $email = $birthday = $gender = "";
 $username_err = $password_err = $confirm_password_err = "";
  
 // Processing form data when form is submitted
@@ -15,9 +42,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $username_err = "Please enter a username.";
     } else{
         // Prepare a select statement
-        $sql = "SELECT username FROM users WHERE username = ?";
+        $sql = "SELECT id FROM users WHERE username = ?";
         
-        if($stmt = mysqli_prepare($conn, $sql)){
+        if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "s", $param_username);
             
@@ -46,9 +73,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate password
     if(empty(trim($_POST["password"]))){
         $password_err = "Please enter a password.";     
-    } elseif(strlen(trim($_POST["password"])) < 6){
-        $password_err = "Password must have atleast 6 characters.";
-    } else{
+    } 
+    else{
         $password = trim($_POST["password"]);
     }
     
@@ -56,9 +82,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(empty($username_err) && empty($password_err) && empty($confirm_password_err)){
         
         // Prepare an insert statement
-        $sql = "INSERT INTO users (fname, lname, email, username, password, birthday, gender) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
          
-        if($stmt = mysqli_prepare($conn, $sql)){
+        if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password);
             
@@ -80,6 +106,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     
     // Close connection
-    mysqli_close($conn);
+    mysqli_close($link);
 }
 ?>
+
+
+
+      <?php
+    if (isset($_GET["error"])) {
+    if($_GET["error"] == "emptyInput") {
+    echo "<p>Please fill in all required fields</p>";
+   }
+   else if ($_GET["error"] == "wronglogin") {
+    echo "<p>The username or password you entered is incorrect.</p>";
+   }
+  } 
+    ?>
