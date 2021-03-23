@@ -22,6 +22,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Check if username is empty
     if(empty(trim($_POST["username"]))){
         $username_err = "Please enter username.";
+        echo $username_err."<br>";
     } else{
         $username = trim($_POST["username"]);
     }
@@ -29,6 +30,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Check if password is empty
     if(empty(trim($_POST["password"]))){
         $password_err = "Please enter your password.";
+        echo $password_err."<br>";
     } else{
         $password = trim($_POST["password"]);
     }
@@ -36,14 +38,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate credentials
     if(empty($username_err) && empty($password_err)){
         // Prepare a select statement
-        $sql = "SELECT username, password FROM users WHERE username = ?";
+        $sql = "SELECT username, password FROM users WHERE `username` = ?;";
         
         if($stmt = mysqli_prepare($conn, $sql)){
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "s", $param_username);
             
             // Set parameters
-            $param_username = $username;
+            $param_username = $username;                     
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
@@ -55,7 +57,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     // Bind result variables
                     mysqli_stmt_bind_result($stmt, $username, $hashed_password);
                     if(mysqli_stmt_fetch($stmt)){
-                        if(password_verify($password, $hashed_password)){
+                        echo "verifying password with hash: ".$password.", ".$hashed_password;
+                        $myString = "test";
+                        $myHash = password_hash($myString, PASSWORD_DEFAULT);
+                        echo "result is: ".password_verify($myString, $myHash)."<br>";
+                        if(password_verify($password, $hashed_password))
+                        {
                             // Password is correct, so start a new session
                             session_start();
                             
@@ -65,18 +72,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["username"] = $username;                            
                             
                             // Redirect user to welcome page
-                            header("location: timeline.php");
+                            header("location: /timeline.php");
                         } else{
                             // Display an error message if password is not valid
                             $password_err = "The password you entered was not valid.";
+                            echo $password_err."<br>";
+                            echo $hashed_password;
                         }
                     }
                 } else{
-                    // Display an error message if username doesn't exist
+                    //Display an error message if username doesn't exist
                     $username_err = "No account found with that username.";
+                    echo $username_err."<br>";
                 }
-            } else{
-                echo "Oops! Something went wrong. Please try again later.";
+            } 
+            else{
+                echo "Oops! Something went wrong. Please try again later.".mysqli_error($conn);
             }
 
             // Close statement
