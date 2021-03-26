@@ -21,7 +21,7 @@
    <nav class = "navbar navbar-expand-lg navbar-dark bg-dark mb-3">
     <div class="container">
       <img src="images/logo.png" class="img-fluid" width = "55" height = "55">
-       <a class = "navbar-brand me-auto" href="/timeline.php">SocAware</a>
+       <a class = "navbar-brand me-auto" href="#">SocAware</a>
 
        <?php
         if (isset($_SESSION["username"]))
@@ -70,12 +70,19 @@
 
         }
         else{
-          echo '<li class="nav-item active">
-          <a class="nav-link" href="/index.php" >Sign In</a>
+          echo '<div class="navbar-nav px-2">
+          <ul class="navbar-nav ml-auto">
+    
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <li class="nav-item active">
+          <a class="nav-link px-2" href="/index.php" >Sign In</a>
          </li>
          <li class="nav-item active">
-         <a class="nav-link" href="/createaccount.php">Sign Up</a>
-         </li>';
+         <a class="nav-link px-4" href="/createaccount.php">Sign Up</a>
+         </li>
+         </div>';
         }
        ?>
 

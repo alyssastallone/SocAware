@@ -2,7 +2,7 @@
 include_once 'header.php'
 ?>
     
-    <?php
+<?php
 // Initialize the session
 //session_start();
  
@@ -14,7 +14,6 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
  
 // Include config files
 require_once 'includes/dbh.inc.php';
-//require_once 'functions.inc.php';
 
 // Define variables and initialize with empty values
 $username = $password = "";
@@ -26,7 +25,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Check if username is empty
     if(empty(trim($_POST["username"]))){
         $username_err = "Please enter username.";
-        echo $username_err."<br>";
+        //echo $username_err."<br>";
     } else{
         $username = trim($_POST["username"]);
     }
@@ -34,7 +33,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Check if password is empty
     if(empty(trim($_POST["password"]))){
         $password_err = "Please enter your password.";
-        echo $password_err."<br>";
+        //echo $password_err."<br>";
     } else{
         $password = trim($_POST["password"]);
     }
@@ -61,10 +60,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     // Bind result variables
                     mysqli_stmt_bind_result($stmt, $username, $hashed_password);
                     if(mysqli_stmt_fetch($stmt)){
-                        echo "verifying password with hash: ".$password.", ".$hashed_password;
+                        //echo "verifying password with hash: ".$password.", ".$hashed_password;
                         $myString = "test";
                         $myHash = password_hash($myString, PASSWORD_DEFAULT);
-                        echo "result is: ".password_verify($myString, $myHash)."<br>";
+                        //echo "result is: ".password_verify($myString, $myHash)."<br>";
                         if(password_verify($password, $hashed_password))
                         {
                             // Password is correct, so start a new session
@@ -75,19 +74,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["id"] = $id;
                             $_SESSION["username"] = $username;                            
                             
-                            // Redirect user to welcome page
+                            // Redirect user to timeline page
                             header("location: /timeline.php");
                         } else{
                             // Display an error message if password is not valid
-                            $password_err = "The password you entered was not valid.";
-                            echo $password_err."<br>";
-                            echo $hashed_password;
+                            $password_err = "Incorrect password. Please try again.";
+                            //echo $password_err."<br>";
+                            //echo $hashed_password;
                         }
                     }
                 } else{
                     //Display an error message if username doesn't exist
-                    $username_err = "No account found with that username.";
-                    echo $username_err."<br>";
+                    $username_err = "Username not found. Please try again.";
+                    //echo $username_err."<br>";
                 }
             } 
             else{
@@ -116,24 +115,30 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       <input type = "password" name = "password" id = "password" placeholder="Password" 
       class="form-control">
 
+      <?php
+
+      if(!empty($username_err)){
+            echo "<br>",$username_err,"</br>";
+      }
+      if(!empty($password_err)){
+        echo "<br>",$password_err,"</br>";
+    }
+      ?>
+
       <div class="checkbox mt-3">
          <label>
            <input type = "checkbox"
            value = "remember-me"> Remember Me?
          </label>
       </div>
-      <div class = "mt-3">
-
-
-         <!-- Will need to ADD LINK for this -->     
+      <div class = "mt-3">   
         <button class="btn btn-lg btn-secondary btn-block"
-        >Sign In</button>
+        >Log In</button>
         <div class ="mt-4">
-      <label for = "need-account" class="sr-only">Don't Have an Account?</label>
-      <div class = "mt-3">
-         <!--Use the <a /a> for adding link to sign up button--> 
-     <a href=createaccount.php class = "btn btn-secondary btn-block"
-     role = "button">Sign Up</a>
+      <label for = "need-account" class="pb-3">Don't Have an Account?</label>
+      <div class = "pb-5">
+     <a href=createaccount.php class = "btn btn-secondary btn-block my-1"
+     role = "button">Create Account</a>
       </div>
     </div>
     </form>
