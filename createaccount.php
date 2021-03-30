@@ -143,7 +143,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
       <label for="birthday" class = "mb-2 mt-2">Birthday</label>
        <div class="input-group">
-           <input class="form-control" id="date" name="birthday" placeholder="MM/DD/YYYY" type="text" required autofocus>
+           <input class="form-control" id="date" name="birthday" placeholder="MM/DD/YYYY" type="date" required autofocus>
                <div class= "input-group-text"> <i class="fa fa-calendar"></i> </div>
              </div>
 
@@ -185,7 +185,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         var date_input=$('input[name="date"]'); //our date input has the name "date"
         var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
         date_input.datepicker({
-            format: 'mm/dd/yyyy',
+            format: 'MM/DD/YYYY',
             container: container,
             todayHighlight: true,
             autoclose: true,
