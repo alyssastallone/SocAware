@@ -21,8 +21,14 @@
    <nav class = "navbar navbar-expand-lg navbar-dark bg-dark mb-3">
     <div class="container">
       <img src="images/logo.png" class="img-fluid" width = "55" height = "55">
-       <a class = "navbar-brand me-auto" href="#">SocAware</a>
-
+      <?php
+      if (isset($_SESSION["username"])) {
+       echo'<a class = "navbar-brand me-auto" href="/timeline.php">SocAware</a>';
+      }
+       else {
+       echo '<a class = "navbar-brand me-auto" href="#">SocAware</a>';
+       }
+      ?>  
        <?php
         if (isset($_SESSION["username"]))
         {
