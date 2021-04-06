@@ -33,32 +33,30 @@
         if (isset($_SESSION["username"]))
         {
           echo '<div class="navbar-nav">
-          <ul class="navbar-nav">
-    
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-              <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Create Post
-                  </a>
-                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                    <li><a class="dropdown-item" href="#">Text</a></li>
-                    <li><a class="dropdown-item" href="#">Picture</a></li>
-                    <li><a class="dropdown-item" href="#">Video</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
+                  <ul class="navbar-nav">
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                         <span class="navbar-toggler-icon"></span>
+                   </button>
+               <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                 <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              Create Post</a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                            <li><a href="#" class ="dropdown-item" data-toggle="modal" data-target="#textmodal">Text</a></li>
+                            <li><a class="dropdown-item" href="#">Picture</a></li>
+                            <li><a class="dropdown-item" href="#">Video</a></li>
+                        </ul>
+                     </li>
+                </ul>
+              </div>
     
     
               <li class="nav-item active">
                 <a class = "nav-link" href="/resources.php">Resources</a>
               </li>
     
-          </ul>
+           </ul>
     
           <ul class="navbar-nav ml-auto">
             <li class = "nav-item">
@@ -66,8 +64,7 @@
                 <i class="fa fa-user fa-fw"></i>Profile<br>
               </a>
             </li>
-    
-            <!--need to add logout functionality-->
+
             <li class="nav-item active">
             <a class="nav-link" href="includes/logout.inc.php">Logout</a>
             </li>
@@ -92,9 +89,27 @@
         }
        ?>
 
-   
-
+   <!-- text modal -->
+  <div class="modal fade" id="textmodal" tabindex="-1" role="dialog" aria-labelledby="textmodalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
     </div>
+  </div>
+</div>
+
     </div>
      </nav>
 

@@ -3,9 +3,6 @@ include_once 'header.php'
 ?>
     
 <?php
-// Initialize the session
-//session_start();
- 
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     header("location: /timeline.php");
@@ -71,7 +68,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             
                             // Store data in session variables
                             $_SESSION["loggedin"] = true;
-                            $_SESSION["id"] = $id;
+                            //$_SESSION["id"] = $id;
                             $_SESSION["username"] = $username;                            
                             
                             // Redirect user to timeline page
