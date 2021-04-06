@@ -63,7 +63,7 @@
           <ul class="navbar-nav ml-auto">
             <li class = "nav-item">
               <a class="nav-link" href="/profile.php">
-                <i class="fa fa-user fa-fw"></i>Sample User<br>
+                <i class="fa fa-user fa-fw"></i>Profile<br>
               </a>
             </li>
     

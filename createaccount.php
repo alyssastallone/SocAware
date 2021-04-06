@@ -12,10 +12,10 @@ $username_err = $password_err = $confirm_password_err = "";
  
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-    echo "within POST<br>";
+    //echo "within POST<br>";
 
     if (isset($_POST["submit"])) {
-        echo "in";
+        //echo "in";
         $fname = $_POST["firstname"];
         $lname = $_POST["lastname"];
         $email = $_POST["email"];
