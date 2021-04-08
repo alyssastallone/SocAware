@@ -43,9 +43,9 @@
                       <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                               Create Post</a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                            <li><a href="#" class ="dropdown-item" data-toggle="modal" data-target="#textmodal">Text</a></li>
-                            <li><a class="dropdown-item" href="#">Picture</a></li>
-                            <li><a class="dropdown-item" href="#">Video</a></li>
+                            <li><a class="dropdown-item" href="/textpost.php">Text</a></li>
+                            <li><a class="dropdown-item" href="/picpost.php">Picture</a></li>
+                            <li><a class="dropdown-item" href="/vidpost.php">Video</a></li>
                         </ul>
                      </li>
                 </ul>
