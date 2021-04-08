@@ -21,14 +21,20 @@ include_once 'header.php'
              <div class = "grid">
               <div class = "row">
                 <form>
-                 <div class="form-group">
-                  <h6 class = "display-9">Share your thoughts:</h6>
-                   <textarea class="form-control"  id="textarea" rows="3"></textarea>
+                <div class="form-group">
+               <label for="exampleFormControlFile1">Select a video to share:</label>
+               <div class = "row py-2"></div>
+               <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                 </div>
+                 <div class="form-group py-3">
+                
+                  <h6 class = "display-9 pt-3">Add text: (optional) </h6>
+                   <textarea class="form-control"  id="textarea" rows="2"></textarea>
                     <div class = "row">
                     <div class="col col-lg-6"></div>
                     <div class="col col-lg-4"></div>
                         <div class = "col-lg-2">
-                         <button type="submit" name="submit" class="btn btn-md btn-secondary btn-block pl pl-5 mt-3" >Post</button>
+                         <button type="submit" name="submit" class="btn btn-md btn-secondary btn-block pl-5 mt-3" >Post</button>
                         </div>
                     </div>
                  </div>
