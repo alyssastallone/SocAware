@@ -63,7 +63,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     
     // Validate password
-    echo "received password: ".$_POST["password"];
+    //echo "received password: ".$_POST["password"];
     if(empty(trim($_POST["password"]))){
         $password_err = "Please enter a password.";     
     //} elseif(strlen(trim($_POST["password"])) < 6){
@@ -72,10 +72,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $password = trim($_POST["password"]);
     }
 
-    echo 'current $username and $password is: '.$username. ",".$password;
+    //echo 'current $username and $password is: '.$username. ",".$password;
     // Check input errors before inserting in database
     if(empty($username_err) && empty($password_err)){
-        echo "within insert function<br>";
+        //echo "within insert function<br>";
         // Prepare an insert statement
         $sql = "INSERT INTO users(fname, lname, email, username, password, birthday, gender) VALUES (?, ?, ?, ?, ?, ?, ?)";
          
