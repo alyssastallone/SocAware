@@ -36,18 +36,25 @@ include_once 'header.php'
                
                <h5 class = "display-9 mt-3 mb-1">Current Events:</h5>
                <ul class="list-group list-group-flush">
-              <a href="https://www.cnn.com/world" class ="list-group-item">World News</a>
-              <a href="" class ="list-group-item">More News</a>
-              <a href="" class ="list-group-item">Even More News</a>
+              <a href="https://www.cnn.com/world" class ="list-group-item">CNN News</a>
+              <a href="https://abcnews.go.com/" class ="list-group-item">ABC News</a>
+              <a href="https://www.usnews.com/" class ="list-group-item">US News</a>
+              <a href="https://news.google.com/" class ="list-group-item">Google News</a>
               </ul>
 
               <!-- Charities? section idk -->
                
               <h5 class = "display-9 mt-3 mb-1">Charity Info:</h5>
                <ul class="list-group list-group-flush">
-              <a href="" class ="list-group-item">Fill In Here</a>
-              <a href="" class ="list-group-item">Fill In Here</a>
-              <a href="" class ="list-group-item">Fill In Here</a>
+              <a href="https://wck.org/" class ="list-group-item">World Central Kitchen: Covid Relief</a>
+              <a href="https://www.actionagainsthunger.org/" class ="list-group-item">Action Against Hunger</a>
+              <a href="https://www.americanhumane.org/" class ="list-group-item">American Human: Animal Charity</a>
+              <a href="https://www.awf.org/" class ="list-group-item">African Wildlife Foundation</a>
+              <a href="https://www.cancerresearch.org/" class ="list-group-item">Cancer Research Institute</a>
+              <a href="https://reproductiverights.org/" class ="list-group-item">Center for Reproductive Rights</a>
+              <a href="https://www.globalfundforwomen.org/" class ="list-group-item">Global Fund For Women</a>
+              <a href="https://www.thetrevorproject.org/" class ="list-group-item">The Trevor Project: LGBTQ+ Support</a>
+              <a href="https://endhomelessness.org/" class ="list-group-item">National Alliance to End Homelessness</a>
               </ul>
 
 
