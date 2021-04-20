@@ -1,44 +1,62 @@
 <?php
 include_once 'header.php';
+// Include config file
+require_once "includes/dbh.inc.php";
+
+//for displaying user's name on side
+ // SQL query
+ $strSQL = "SELECT fname, lname FROM users WHERE username = '".$_SESSION['username']."'";
+ 
+  // Execute the query (the recordset $rs contains the result)
+  $rs = mysqli_query($conn, $strSQL);
+
+  // Loop the recordset $rs
+  // Each row will be made into an array ($row) using mysqli_fetch_array
+  while($row = mysqli_fetch_array($rs)) {
+
+    // Write the value of the columns
+    $firstname = $row['fname'];
+    $lastname = $row['lname'];
+
+  }
+
+  // Close the database connection
+  mysqli_close($conn);
+ //end display user first and last name
 
 //session_start();
 
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(!isset($_SESSION["loggedin"]) || !$_SESSION["loggedin"] === true){
-    header("location: /index.php");
+    //header("location: /index.php");
     exit;
 }
 //echo $_SESSION["username"];
 
-// Include config file
-require_once "includes/dbh.inc.php";
  
 // Define variables and initialize with empty values
 $postid = $username = $text = $image = $video = "";
 $postErr = "";
 
 // Processing form data when form is submitted
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-    //echo "within POST<br>";
-
-    if (isset($_POST["submit"])) {
-        $postid = $_POST[""];
+if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["textarea"] != ""){
+        //$postid = $_POST[""];
         $username = $_SESSION["username"];
         $text = $_POST["textarea"];
-        $image = $_POST[NULL];
-        $video = $_POST[NULL];
-    }
+        $image = NULL;
+        $video = NULL;
+    
 
     if(empty(trim($_POST["textarea"]))){
       $postErr = "Please enter text to post";
     } 
     else{
       // Prepare an insert statement
-      $sql = "INSERT INTO posts(postid, username, text, image, video) VALUES (?, ?, ?, ?, ?)";
+      $sql = "INSERT INTO `posts`(`username`, `text`, `image`, `video`) VALUES (?, ?, ?, ?)";
 
       if($stmt = mysqli_prepare($conn, $sql)){
         // Bind variables to the prepared statement as parameters
-        mysqli_stmt_bind_param($stmt, "sssss", $postid, $username, $text, $image, $video);
+        mysqli_stmt_bind_param($stmt, "ssss", $username, $text, $image, $video);
         //echo $stmt;
           // Attempt to execute the prepared statement
            if(mysqli_stmt_execute($stmt)){
@@ -63,7 +81,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
          <div class="col-lg-3">
            <div class="card-body text-center shadow p-4 mb-4 bg-white">
              <img src="images/sample-profile.png" class="rounded-circle" class="img-fluid" max-width= 100%>
-             <h3 class="card-title mt-2">Sample User</h3>
+             <h3 class="card-title mt-2"><?php
+             echo $firstname;
+             echo "  ";
+             echo $lastname;
+             ?></h3>
            </div>
          </div>
 
