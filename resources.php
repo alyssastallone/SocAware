@@ -45,7 +45,7 @@ require_once 'includes/dbh.inc.php';
              <div class="d-flex">
              <div class = "grid">
              <div class = "row">
-              <h5 class = "display-9">Covid News and Info:</h5>
+              <h5 class = "display-9">COVID News and Info:</h5>
 
         <!-- Covid info section -->
 
@@ -54,6 +54,7 @@ require_once 'includes/dbh.inc.php';
               <a href="https://www.npr.org/sections/health-shots/2020/09/01/816707182/map-tracking-the-spread-of-the-coronavirus-in-the-u-s"
                  class ="list-group-item">Case Tracker by State</a>
               <a href="https://www.cdc.gov/vaccines/covid-19/reporting/vaccinefinder/about.html" class ="list-group-item">Vaccine Information and Locations</a>
+              <a href="mentalhealth.gov" class ="list-group-item">Mental Health Support Info</a>
               </ul>
 
                <!-- News Section -->
@@ -79,9 +80,14 @@ require_once 'includes/dbh.inc.php';
               <a href="https://www.globalfundforwomen.org/" class ="list-group-item">Global Fund For Women</a>
               <a href="https://www.thetrevorproject.org/" class ="list-group-item">The Trevor Project: LGBTQ+ Support</a>
               <a href="https://endhomelessness.org/" class ="list-group-item">National Alliance to End Homelessness</a>
+              <a href="https://stopaapihate.org/" class ="list-group-item">Stop AAPI Hate</a>
+              <a href="https://girlswhocode.com/?gclid=Cj0KCQjw9_mDBhCGARIsAN3PaFPt96gApjVD65Z1RflZ0kPM4cJa-jpfg2F0EJciGX3xd3zGvgPnZ2UaAtRXEALw_wcB" class ="list-group-item">Girls Who Code</a>
               </ul>
 
-
+              <h5 class = "display-9 mt-3 mb-1">Support Small Businesses:</h5>
+              <ul class="list-group list-group-flush">
+              <a href="https://www.instagram.com/lovedenisebakeshop/" class ="list-group-item">Love, Denise Bakeshop</a>
+              <a href="https://www.coeurbeauty.shop/" class ="list-group-item">Coeur Beauty Shop</a>
             
               </div>
               </div>
