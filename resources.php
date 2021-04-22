@@ -1,7 +1,8 @@
 <?php
 include_once 'header.php';
 require_once 'includes/dbh.inc.php';
-//for displaying user's name on side
+
+//for displaying user's name on the side by picture
  // SQL query
  $strSQL = "SELECT fname, lname FROM users WHERE username = '".$_SESSION['username']."'";
  
