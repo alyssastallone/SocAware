@@ -23,67 +23,84 @@ require_once "includes/dbh.inc.php";
   }
 
   // Close the database connection
-  mysqli_close($conn);
+  //mysqli_close($conn);
 ?>
 
-
 <?php
-error_reporting(0);
-?>
-<?php
-  $msg = "";
-
-  // Define variables and initialize with empty values
-  $postid = $username = $text = $image = $video = "";
-  $postErr = "";
-
-  
-  // If post button is clicked ...
-  if (isset($_POST['submit'])) {
 
 
-    $filename = $_FILES["uploadfile"]["name"];
-    $tempname = $_FILES["uploadfile"]["tmp_name"];    
-    $folder = "images/".$filename;
+$resultmsg = "";
+$errormsg = "";
+$invalidType = "";
 
-    //$postid = $_POST[""];
-    $username = $_SESSION["username"];
-    $text = $_POST["textarea"];
-    $image = $_POST[$filename];
-    $video = $_POST[NULL];
-        
-          
-    //$db = mysqli_connect("localhost", "root", "", "photos");
-        // Two things:  1. to upload to the server
-        //              2. to write to the database of the file path you just uploaded.
+if(isset($_POST["submit"])) {
+$target_dir = "images/";
+$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+$uploadOk = 1;
+$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
-
-        // Based on the username, create a unique file name or soemthing like that
-        // likely you want to save user images in different folders, e.g. for admin
-        // the images should be saved under /images/admin/...
-        // or just name them differently
-        // anyway need a way to distinguish images from different users.
-
-        // goal: make up a file name, which needs to be what you store in the database for the "image" field.
-        // e.g. admin/1.jpg  <-- this is what you want to save in the database for the "image" field
-
-        // Get all the submitted data from the form
-        $sql = "INSERT INTO posts (username, text, image, video) VALUES (?, ?, ?, ?)";
-  
-        // Execute query
-        // ************** for each step , check if it's successful, and show error message when applicable
-        mysqli_query($conn, $sql);
-          
-        // Now let's move the uploaded image into the folder: images
-        if (move_uploaded_file($tempname, $folder))  {
-            $msg = "Image uploaded successfully";
-        }else{
-            $msg = "Failed to upload image";
-      }
+ 
+  /* Check if file already exists
+  if (file_exists($target_file)) {
+    $errormsg = "Sorry, file already exists.";
+    $uploadOk = 0;
   }
-  //$result = mysqli_query($conn, "SELECT * FROM image");
-?>
+  */
+  
+ /* //Check file size
+  if ($_FILES["fileToUpload"]["size"] > 500000) {
+    echo "Sorry, your file is too large.";
+    $uploadOk = 0;
+  }
+  */
+  
+  
+  // Allow certain file formats
+  if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
+    $invalidType = "Sorry, only JPG, JPEG, & PNG files are allowed. <br>";
+    $uploadOk = 0;
+  }
+  
+  // Check if $uploadOk is set to 0 by an error
+  if ($uploadOk == 0) {
+    $errormsg = "Your file was not uploaded. Please try again! <br>";
+  // if everything is ok, try to upload file
+  } else {
+    
+    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
 
+      //save to the database
+      $username = $_SESSION["username"];
+      $text = $_POST['textarea'];
+      $video = NULL;
+
+      //echo "check file name: ". $target_file."<br>";
+      $sql = "INSERT INTO `posts`(`username`, `text`, `image`, `video`) VALUES (?, ?, ?, ?)";
+
+      if($stmt = mysqli_prepare($conn, $sql)){
+        // Bind variables to the prepared statement as parameters
+        mysqli_stmt_bind_param($stmt, "ssss", $username, $text, $target_file, $video);
+          // Attempt to execute the prepared statement
+           if(mysqli_stmt_execute($stmt)){
+          // Redirect to timeline page
+          //echo "picture written to DB";
+          header("location: timeline.php");
+          } else{
+          $errormsg = "Something went wrong. Please try again later.". mysqli_error($conn);
+          }
+      
+          // Close statement
+         mysqli_stmt_close($stmt);
+        }
+
+        $resultmsg = "Your picture ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been successfully uploaded.";
+    
+    } else {
+      $resultmsg = "There was an error uploading your picture.";
+    }
+  }
+}
+?>
 
      <!--add new container profile-->
      <div class = "container mb-5">
@@ -107,22 +124,33 @@ error_reporting(0);
             <hr class="my-4"></hr>
              <div class = "grid">
               <div class = "row">
-                <form action ="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method = "POST" enctype="multipart/form-data">
+                <form id = "userpost" action ="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method = "POST" enctype="multipart/form-data">
                 <div class="form-group">
                <label for="exampleFormControlFile1">Select a picture to share:</label>
                <div class = "row py-2"></div>
-               <input type="file" class="form-control-file" id="formcontrolfile">
+               <input type="file" name = "fileToUpload" id="fileToUpload">
                  </div>
                  <div class="form-group py-3">
                 
                   <h6 class = "display-9 pt-3">Add text: (optional) </h6>
-                   <textarea class="form-control"  id="textarea" rows="2"></textarea>
+                   <textarea form="userpost" class="form-control" id="textarea" name = "textarea" rows="2"></textarea>
                     <div class = "row">
                     <div class="col col-lg-6"></div>
                     <div class="col col-lg-4"></div>
                         <div class = "col-lg-2">
-                         <button type="submit" name="submit" class="btn btn-md btn-secondary btn-block pl-5 mt-3">Post</button>
+                         <button type="submit" name="submit" class="btn btn-md btn-secondary btn-block pl-5 mt-3 mb-3">Post</button>
                         </div>
+                    <div class = "row">
+                    <div class="col col-sm-2"></div>
+                    <?php
+                    if(!empty($invalidType))
+                    {
+                      echo $invalidType;
+                    }
+                    echo "     " . $resultmsg;
+                    echo "     " . $errormsg;
+                    ?>
+                    </div>
                     </div>
                  </div>
                 </form>

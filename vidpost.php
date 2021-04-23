@@ -3,7 +3,7 @@ include_once 'header.php'
 ?>
 
 <?php
-require_once 'includes/dbh.inc.php';
+require_once "includes/dbh.inc.php";
 
 //for displaying user's name on side
  // SQL query
@@ -23,9 +23,84 @@ require_once 'includes/dbh.inc.php';
   }
 
   // Close the database connection
-  mysqli_close($conn);
+  //mysqli_close($conn);
+?>
+
+<?php
 
 
+$resultmsg = "";
+$errormsg = "";
+$invalidType = "";
+
+if(isset($_POST["submit"])) {
+$target_dir = "videos/";
+$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+$uploadOk = 1;
+$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+ 
+  /* Check if file already exists
+  if (file_exists($target_file)) {
+    $errormsg = "Sorry, file already exists.";
+    $uploadOk = 0;
+  }
+  */
+  
+ /* //Check file size
+  if ($_FILES["fileToUpload"]["size"] > 500000) {
+    echo "Sorry, your file is too large.";
+    $uploadOk = 0;
+  }
+  */
+  
+  
+  // Allow certain file formats
+  if($imageFileType != "mov" && $imageFileType != "mp4" && $imageFileType != "wmv" &&
+  $imageFileType != "flv") {
+    $invalidType = "Sorry, only MOV, MP4, WMV & FLV files are allowed. <br>";
+    $uploadOk = 0;
+  }
+  
+  // Check if $uploadOk is set to 0 by an error
+  if ($uploadOk == 0) {
+    $errormsg = "Your file was not uploaded. Please try again! <br>";
+  // if everything is ok, try to upload file
+  } else {
+    
+    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+
+      //save to the database
+      $username = $_SESSION["username"];
+      $text = $_POST['textarea'];
+      $image = NULL;
+
+      //echo "check file name: ". $target_file."<br>";
+      $sql = "INSERT INTO `posts`(`username`, `text`, `image`, `video`) VALUES (?, ?, ?, ?)";
+
+      if($stmt = mysqli_prepare($conn, $sql)){
+        // Bind variables to the prepared statement as parameters
+        mysqli_stmt_bind_param($stmt, "ssss", $username, $text, $image, $target_file);
+          // Attempt to execute the prepared statement
+           if(mysqli_stmt_execute($stmt)){
+          // Redirect to timeline page
+          //echo "picture written to DB";
+          header("location: timeline.php");
+          } else{
+          $errormsg = "Something went wrong. Please try again later.". mysqli_error($conn);
+          }
+      
+          // Close statement
+         mysqli_stmt_close($stmt);
+        }
+
+        $resultmsg = "Your video ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been successfully uploaded.";
+    
+    } else {
+      $resultmsg = "There was an error uploading your video.";
+    }
+  }
+}
 ?>
 
      <!--add new container profile-->
@@ -50,22 +125,33 @@ require_once 'includes/dbh.inc.php';
             <hr class="my-4"></hr>
              <div class = "grid">
               <div class = "row">
-                <form>
+                <form id = "userpost" action ="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method = "POST" enctype="multipart/form-data">
                 <div class="form-group">
                <label for="exampleFormControlFile1">Select a video to share:</label>
                <div class = "row py-2"></div>
-               <input type="file" class="form-control-file" id="exampleFormControlFile1">
+               <input type="file" name = "fileToUpload" id="fileToUpload">
                  </div>
                  <div class="form-group py-3">
                 
                   <h6 class = "display-9 pt-3">Add text: (optional) </h6>
-                   <textarea class="form-control"  id="textarea" rows="2"></textarea>
+                   <textarea form="userpost" class="form-control" id="textarea" name = "textarea" rows="2"></textarea>
                     <div class = "row">
                     <div class="col col-lg-6"></div>
                     <div class="col col-lg-4"></div>
                         <div class = "col-lg-2">
-                         <button type="submit" name="submit" class="btn btn-md btn-secondary btn-block pl-5 mt-3" >Post</button>
+                         <button type="submit" name="submit" class="btn btn-md btn-secondary btn-block pl-5 mt-3 mb-3">Post</button>
                         </div>
+                    <div class = "row">
+                    <div class="col col-sm-2"></div>
+                    <?php
+                    if(!empty($invalidType))
+                    {
+                      echo $invalidType;
+                    }
+                    echo "     " . $resultmsg;
+                    echo "     " . $errormsg;
+                    ?>
+                    </div>
                     </div>
                  </div>
                 </form>

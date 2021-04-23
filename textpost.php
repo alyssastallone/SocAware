@@ -21,7 +21,7 @@ require_once "includes/dbh.inc.php";
   }
 
   // Close the database connection
-  mysqli_close($conn);
+  //mysqli_close($conn);
  //end display user first and last name
 
 //session_start();
@@ -37,18 +37,19 @@ if(!isset($_SESSION["loggedin"]) || !$_SESSION["loggedin"] === true){
 // Define variables and initialize with empty values
 $postid = $username = $text = $image = $video = "";
 $postErr = "";
+$errormsg = "";
 
 // Processing form data when form is submitted
-if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["textarea"] != ""){
+if($_SERVER["REQUEST_METHOD"] == "POST"){
         //$postid = $_POST[""];
         $username = $_SESSION["username"];
         $text = $_POST["textarea"];
         $image = NULL;
         $video = NULL;
     
-
-    if(empty(trim($_POST["textarea"]))){
-      $postErr = "Please enter text to post";
+    if(empty($_POST["textarea"]))
+    {
+      $postErr = "Please enter some text first and try again!";
     } 
     else{
       // Prepare an insert statement
@@ -63,7 +64,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["textarea"] != ""){
           // Redirect to timeline page
           header("location: timeline.php");
           } else{
-          echo "Something went wrong. Please try again later.". mysqli_error($conn);
+          $errormsg = "Something went wrong. Please try again later.". mysqli_error($conn);
           }
       
           // Close statement
@@ -107,12 +108,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["textarea"] != ""){
                         <div class = "col-lg-2">
                          <button type="submit" name="post" class="btn btn-md btn-secondary btn-block pl pl-5 mt-3" >Post</button>
                         </div>
-
-                        <?php
+                        <div class = "row">
+                        <div class="col col-sm-2"></div>
+                        <div class="col"> <?php
                         if(!empty($postErr)){
-                          echo "<br>",$postErr,"</br>";
+                          echo "<br>". $postErr."</br>";
                          }
-                        ?>
+                        ?></div>
+                       
 
                     </div>
                  </div>

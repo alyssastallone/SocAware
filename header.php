@@ -40,10 +40,16 @@
                    </button>
                <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                  <ul class="navbar-nav">
+
+                 <div class="input-group">
+                 <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+                   aria-describedby="search-addon" />
+               </div>
+
                     <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                               Create Post</a>
-                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                        <ul class="dropdown-menu dropdown-menu-dark m-2" aria-labelledby="navbarDarkDropdownMenuLink">
                             <li><a class="dropdown-item" href="/textpost.php">Text</a></li>
                             <li><a class="dropdown-item" href="/picpost.php">Picture</a></li>
                             <li><a class="dropdown-item" href="/vidpost.php">Video</a></li>
