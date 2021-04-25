@@ -57,11 +57,14 @@ require_once 'includes/dbh.inc.php';
               <a href="https://www.cdc.gov/vaccines/covid-19/reporting/vaccinefinder/about.html" class ="list-group-item">Vaccine Information and Locations</a>
               </ul>
               
-              <!-- Mental Health Resource section -->
-        <a href="https://www.mentalhealth.gov/" class ="list-group-item">Mental Health Support Info</a>
-        <a href="https://www.verywellmind.com/" class ="list-group-item">Very Well Mind</a>
-        <a href="https://www.betterhelp.com/about/" class="list-group-item">Better Help Counseling</a>
-        <a href="https://www.15minutes4me.com/" class="list-group-item"> 15 Minutes 4 Me</a>
+               <!-- Mental Health Resource section -->
+              <h5 class = "display-9 mt-3 mb-1">Mental Health Resources:</h5>
+              <ul class="list-group list-group-flush">
+              <a href="https://www.mentalhealth.gov/" class ="list-group-item">Mental Health Support Info</a>
+              <a href="https://www.verywellmind.com/" class ="list-group-item">Very Well Mind</a>
+              <a href="https://www.betterhelp.com/about/" class="list-group-item">Better Help Counseling</a>
+              <a href="https://www.15minutes4me.com/" class="list-group-item"> 15 Minutes 4 Me</a>
+              </ul>
 
                <!-- News Section -->
                
