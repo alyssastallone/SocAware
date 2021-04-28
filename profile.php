@@ -24,8 +24,6 @@ require_once 'includes/dbh.inc.php';
   //parameters for mysql_query(connection, and above variable)
   $result = mysqli_query($conn, $sql);
 
-  //check to see if the query returns any results
-
 
   // Close the database connection
   mysqli_close($conn);
