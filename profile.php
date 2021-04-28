@@ -19,8 +19,18 @@ require_once 'includes/dbh.inc.php';
 
   }
 
+  //then query the database for all posts to display 
+  $sql = "SELECT * from posts WHERE username = '".$_SESSION['username']."' ORDER BY postid desc";
+  //parameters for mysql_query(connection, and above variable)
+  $result = mysqli_query($conn, $sql);
+
+  //check to see if the query returns any results
+
+
   // Close the database connection
   mysqli_close($conn);
+
+
 ?>
 
      <!--add new container profile-->
@@ -48,7 +58,38 @@ require_once 'includes/dbh.inc.php';
              <hr class="my-4">
              <div class="d-flex justify-content-center">
              <div class = "container">
+    
                <p class="h3">
+               <div class = 'row'>
+               <?php 
+               while ($postRow = mysqli_fetch_array($result))
+                  {
+                    $user = $_SESSION['username'];
+                    $picture = $postRow['image'];
+                    $video = $postRow['video'];
+                    $text = $postRow['text'];
+                  
+                ?>
+
+                <div class = "col sm-4"> <strong><?php echo $user;?></strong> <?php echo "shared: "?></div>
+                 <div class = "col sm -3"></div>
+                 <div class = "col sm -3"></div>
+                </div>
+               <div class ="row">
+                  <div class = "col sm-3"><?php echo "<img src= '$picture' class = img-fluid>";?></div>
+               </div>
+               <div class ="row">
+                  <div class = "col sm-3">
+                  <?php 
+                  if($video != NULL){
+                  echo "<video src = '$video' controls></video>";}
+                  ?>
+                   </div>
+               </div>
+               <div class ="row">
+                  <div class = "col sm-3"><?php echo $text;?> <hr> <?php } ?> </div>
+               </div>
+              </div>
                </p>
                </div>
              </div>
