@@ -41,10 +41,8 @@
                <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                  <ul class="navbar-nav">
 
-                 <div class="input-group">
-                 <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
-                   aria-describedby="search-addon" />
-               </div>
+                
+
 
                     <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -112,3 +110,10 @@
     
   </body>
 </html>
+
+<!-- search bar code here, but not yet implemented 
+<div class="input-group">
+                 <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+                   aria-describedby="search-addon" />
+               </div>
+               -->
